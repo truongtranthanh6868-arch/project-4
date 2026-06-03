@@ -165,8 +165,29 @@ export default function CouponCodeScreen() {
   const handleConfirmSelection = () => {
     if (selectedVoucher) {
       const selected = VOUCHERS.find(v => v.id === selectedVoucher);
+      let discountVal = 0;
+      if (selectedVoucher === 1) discountVal = 50000;
+      else if (selectedVoucher === 2) discountVal = 25000;
+      else if (selectedVoucher === 3) discountVal = 100000; // Mock combo discount
+      else if (selectedVoucher === 4) discountVal = 20000;
+      else if (selectedVoucher === 5) discountVal = 30000;
+      else if (selectedVoucher === 6) discountVal = 40000;
+      else if (selectedVoucher === 7) discountVal = 15000;
+
       Alert.alert('Xác nhận', `Đã áp dụng mã: ${selected?.title}`, [
-        { text: 'OK', onPress: () => router.back() }
+        { 
+          text: 'OK', 
+          onPress: () => {
+            router.replace({
+              pathname: '/shopping-cart',
+              params: {
+                discount: discountVal,
+                voucherTitle: selected?.title,
+                selectedId: selectedVoucher,
+              }
+            });
+          }
+        }
       ]);
     } else {
       router.back();
